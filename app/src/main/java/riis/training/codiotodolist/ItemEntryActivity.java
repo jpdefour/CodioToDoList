@@ -1,20 +1,28 @@
 package riis.training.codiotodolist;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+
+import java.util.Calendar;
+
+import riis.training.codiotodolist.Model.Item;
 
 public class ItemEntryActivity extends AppCompatActivity {
 
     EditText nameText, descriptionText;
     FloatingActionButton fabSave;
     RelativeLayout rootLayout;
+    Button dateButton, timeButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,13 +36,20 @@ public class ItemEntryActivity extends AppCompatActivity {
 
         rootLayout = (RelativeLayout) findViewById(R.id.itemEntryLayout);
 
+        dateButton = (Button) findViewById(R.id.date);
+        timeButton = (Button) findViewById(R.id.time);
+
         fabSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String name = nameText.getText().toString();
                 String description = descriptionText.getText().toString();
                 if (!name.isEmpty()) {
-
+                    DBHandler dbHandler = new DBHandler(getApplicationContext(), null, null, 1);
+                    Item item = new Item();
+                    item.setName(name);
+                    item.setDescription(description);
+                    dbHandler.addItem(item);
 
                     Intent returnIntent = new Intent();
                     returnIntent.putExtra("name", name);
@@ -44,6 +59,22 @@ public class ItemEntryActivity extends AppCompatActivity {
                 } else {
                     Snackbar.make(rootLayout, "Please put in a name.", Snackbar.LENGTH_LONG).show();
                 }
+            }
+        });
+
+        dateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                new DatePickerDialog(getApplicationContext(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+                    }
+                }, year, month, day).show();
             }
         });
 

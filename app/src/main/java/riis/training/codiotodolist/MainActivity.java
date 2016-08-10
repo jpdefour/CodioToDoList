@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import riis.training.codiotodolist.Model.Item;
 
@@ -18,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
-    ArrayList<Item> items;
+    List<Item> items;
     ItemAdapter adapter;
     FloatingActionButton fab;
     Activity thisActivity;
@@ -31,12 +32,10 @@ public class MainActivity extends AppCompatActivity {
         thisActivity = this;
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        items = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            items.add(new Item());
-            int j = i + 1;
-            items.get(i).setName("Dummy name " + j);
-            items.get(i).setDescription("Dummy description " + j);
+        try {
+            items = getItems();
+        } catch (Exception e) {
+            items = new ArrayList<>();
         }
 
         recyclerView.setHasFixedSize(true);
@@ -55,6 +54,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent, 1);
             }
         });
+    }
+
+    public List<Item> getItems() {
+        DBHandler dbHandler = new DBHandler(this, null, null, 1);
+
+        List<Item> dbItems = dbHandler.findItems();
+
+        return dbItems;
     }
 
     @Override

@@ -16,7 +16,7 @@ import riis.training.codiotodolist.Model.Item;
  */
 public class DBHandler extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_NAME = "todoItemsDB.db";
     private static final String TABLE_ITEMS = "items";
 
@@ -25,16 +25,17 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_DESCRIPTION = "description";
 
     public DBHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+        super(context, DATABASE_NAME, factory, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_PRODUCTS_TABLE = "CREATE TABLE " +
+
+        String CREATE_ITEMS_TABLE = "CREATE TABLE " +
                 TABLE_ITEMS + "("
-                + COLUMN_ID + " INTEGER PRIMARY KEY," + COLUMN_NAME
+                + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_NAME
                 + " TEXT," + COLUMN_DESCRIPTION + " TEXT" + ")";
-        db.execSQL(CREATE_PRODUCTS_TABLE);
+        db.execSQL(CREATE_ITEMS_TABLE);
     }
 
     @Override
@@ -50,7 +51,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
-        db.insert(TABLE_ITEMS, null, values);
+        long value = db.insert(TABLE_ITEMS, null, values);
         db.close();
     }
 
