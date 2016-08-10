@@ -8,6 +8,7 @@ import android.widget.CheckBox;
  * Created by John on 8/8/2016.
  */
 public class Item {
+    private int id;
     private String name;
     private String description;
     private boolean isChecked;
@@ -34,5 +35,13 @@ public class Item {
 
     public void setChecked(boolean checked) {
         isChecked = checked;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

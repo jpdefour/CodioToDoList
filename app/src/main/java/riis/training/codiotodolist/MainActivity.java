@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         items = new ArrayList<>();
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < 5; i++) {
             items.add(new Item());
             int j = i + 1;
             items.get(i).setName("Dummy name " + j);
@@ -55,5 +55,19 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent, 1);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                Item newItem = new Item();
+                newItem.setName(data.getStringExtra("name"));
+                newItem.setDescription(data.getStringExtra("description"));
+                items.add(newItem);
+                adapter.notifyDataSetChanged();
+            }
+        }
     }
 }
