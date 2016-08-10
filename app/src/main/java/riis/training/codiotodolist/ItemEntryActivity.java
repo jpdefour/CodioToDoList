@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.util.Calendar;
 
@@ -20,6 +21,7 @@ import riis.training.codiotodolist.Model.Item;
 
 public class ItemEntryActivity extends AppCompatActivity {
 
+    TextView dateText, timeText;
     EditText nameText, descriptionText;
     FloatingActionButton fabSave;
     RelativeLayout rootLayout;
@@ -29,6 +31,9 @@ public class ItemEntryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_entry);
+
+        dateText = (TextView) findViewById(R.id.dateText);
+        timeText = (TextView) findViewById(R.id.timeText);
 
         nameText = (EditText) findViewById(R.id.nameField);
         descriptionText = (EditText) findViewById(R.id.descriptionField);
@@ -45,6 +50,8 @@ public class ItemEntryActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String name = nameText.getText().toString();
                 String description = descriptionText.getText().toString();
+                String date = dateText.getText().toString();
+                String time = timeText.getText().toString();
                 if (!name.isEmpty()) {
                     DBHandler dbHandler = new DBHandler(getApplicationContext(), null, null, 1);
                     Item item = new Item();
@@ -55,6 +62,8 @@ public class ItemEntryActivity extends AppCompatActivity {
                     Intent returnIntent = new Intent();
                     returnIntent.putExtra("name", name);
                     returnIntent.putExtra("description", description);
+                    
+
                     setResult(Activity.RESULT_OK, returnIntent);
                     finish();
                 } else {
@@ -70,10 +79,22 @@ public class ItemEntryActivity extends AppCompatActivity {
             }
         });
 
+        timeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTimePickerDialog(v);
+            }
+        });
+
     }
 
     public void showDatePickerDialog(View v) {
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getFragmentManager(), "datePicker");
+    }
+
+    public void showTimePickerDialog(View v) {
+        DialogFragment newFragment = new TimePickerFragment();
+        newFragment.show(getFragmentManager(), "timePicker");
     }
 }
