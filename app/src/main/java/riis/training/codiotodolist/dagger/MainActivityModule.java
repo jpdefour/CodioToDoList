@@ -32,9 +32,7 @@ public class MainActivityModule {
         return new ArrayList<>();
     }
     @Provides static RecyclerView.LayoutManager provideLinearLayoutManager(Context context) { return new LinearLayoutManager(context); }
-//    @Provides static ItemAdapter provideRecyclerView () {
-//
-//    }
+
 
 
 }
