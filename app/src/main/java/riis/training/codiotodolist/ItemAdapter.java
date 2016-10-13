@@ -6,12 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
-import riis.training.codiotodolist.Model.Item;
-import riis.training.codiotodolist.Model.ItemViewHolder;
+import riis.training.codiotodolist.model.Item;
+import riis.training.codiotodolist.model.ItemViewHolder;
 
 /**
  * Created by John on 8/8/2016.

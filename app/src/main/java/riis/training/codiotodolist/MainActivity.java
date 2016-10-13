@@ -8,41 +8,41 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ArrayAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import riis.training.codiotodolist.Model.Item;
+import javax.inject.Inject;
+
+import riis.training.codiotodolist.dagger.ToDoListApplication;
+import riis.training.codiotodolist.model.Item;
 
 public class MainActivity extends AppCompatActivity {
 
+
     RecyclerView recyclerView;
-    RecyclerView.LayoutManager layoutManager;
-    List<Item> items;
     ItemAdapter adapter;
     FloatingActionButton fab;
     Activity thisActivity;
+
+    @Inject List<Item> items;
+    @Inject RecyclerView.LayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        ((ToDoListApplication) getApplication()).getAppComponent().inject(this);
         thisActivity = this;
-
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         try {
             items = getItems();
         } catch (Exception e) {
-            items = new ArrayList<>();
+
         }
 
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
-
-        layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-
         adapter = new ItemAdapter(items);
         recyclerView.setAdapter(adapter);
 
@@ -58,10 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
     public List<Item> getItems() {
         DBHandler dbHandler = new DBHandler(this, null, null, 1);
-
-        List<Item> dbItems = dbHandler.findItems();
-
-        return dbItems;
+        return dbHandler.findItems();
     }
 
     @Override

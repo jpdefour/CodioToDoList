@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-import riis.training.codiotodolist.Model.Item;
+import riis.training.codiotodolist.model.Item;
 
 /**
  * Created by John on 8/8/2016.

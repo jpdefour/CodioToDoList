@@ -1,8 +1,4 @@
-package riis.training.codiotodolist.Model;
-
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.CheckBox;
+package riis.training.codiotodolist.model;
 
 /**
  * Created by John on 8/8/2016.

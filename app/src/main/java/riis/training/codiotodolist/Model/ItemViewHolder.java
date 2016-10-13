@@ -1,11 +1,9 @@
-package riis.training.codiotodolist.Model;
+package riis.training.codiotodolist.model;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import riis.training.codiotodolist.R;
 
